@@ -84,9 +84,9 @@ public enum EZPlayerSlideTrigger{
 
 open class EZPlayer: NSObject {
     // MARK: -  player utils
-    public static var showLog = true//是否显示log
+    @objc public static var showLog = true//是否显示log
     // MARK: -  player setting
-    open weak var delegate: EZPlayerDelegate?
+    @objc open weak var delegate: EZPlayerDelegate?
 
     open var videoGravity = EZPlayerVideoGravity.aspect{
         didSet {
@@ -98,18 +98,18 @@ open class EZPlayer: NSObject {
 
 
     /// 设置url会自动播放
-    open var autoPlay = true
+    @objc open var autoPlay = true
 
     /// 设备横屏时自动旋转(phone)
-    open var autoLandscapeFullScreenLandscape = UIDevice.current.userInterfaceIdiom == .phone
+    @objc open var autoLandscapeFullScreenLandscape = UIDevice.current.userInterfaceIdiom == .phone
     /// 浮框的模式
-    open var floatMode = EZPlayerFloatMode.auto
+    @objc open var floatMode = EZPlayerFloatMode.auto
     /// 全屏的模式
-    open var fullScreenMode = EZPlayerFullScreenMode.landscape
+    @objc open var fullScreenMode = EZPlayerFullScreenMode.landscape
     /// 全屏时status bar的样式
-    open var fullScreenPreferredStatusBarStyle = UIStatusBarStyle.lightContent
+    @objc open var fullScreenPreferredStatusBarStyle = UIStatusBarStyle.lightContent
     /// 全屏时status bar的背景色
-    open var fullScreenStatusbarBackgroundColor = UIColor.black.withAlphaComponent(0.3)
+    @objc open var fullScreenStatusbarBackgroundColor = UIColor.black.withAlphaComponent(0.3)
 
     /// 支持airplay
     open var allowsExternalPlayback = true{
@@ -134,7 +134,7 @@ open class EZPlayer: NSObject {
     private var timer       : Timer?//.EZPlayerHeartbeat使用
 
     // MARK: -  player resource
-    open var contentItem: EZPlayerContentItem?
+    @objc open var contentItem: EZPlayerContentItem?
 
     open private(set)  var contentURL :URL?{//readonly
         didSet{
@@ -201,14 +201,14 @@ open class EZPlayer: NSObject {
     }
 
     /// 上下滑动屏幕的控制类型
-    open var slideTrigger = (left:EZPlayerSlideTrigger.volume,right:EZPlayerSlideTrigger.brightness)
+    @objc open var slideTrigger = (left:EZPlayerSlideTrigger.volume,right:EZPlayerSlideTrigger.brightness)
     /// 左右滑动屏幕改变视频进度
-    open var canSlideProgress = true
+    @objc open var canSlideProgress = true
 
     // MARK: -  player component
 
     //只读
-    open  var controlView : UIView?{
+    @objc open  var controlView : UIView?{
         if let view = self.controlViewForIntercept{
             return view
         }
@@ -225,7 +225,7 @@ open class EZPlayer: NSObject {
     }
 
     /// 拦截原来的各种controlView，作用：比如你要插入一个广告的view，广告结束置空即可
-    open  var controlViewForIntercept : UIView? {
+    @objc open  var controlViewForIntercept : UIView? {
         didSet{
             self.updateCustomView()
         }
@@ -233,11 +233,11 @@ open class EZPlayer: NSObject {
 
     ///cactus todo EZPlayerControlView
     /// 嵌入模式的控制皮肤
-    open  var controlViewForEmbedded : UIView?
+    @objc open  var controlViewForEmbedded : UIView?
     /// 浮动模式的控制皮肤
-    open  var controlViewForFloat : UIView?
+    @objc open  var controlViewForFloat : UIView?
     /// 全屏模式的控制皮肤
-    open  var controlViewForFullscreen : UIView?
+    @objc open  var controlViewForFullscreen : UIView?
 
 
 
@@ -260,20 +260,20 @@ open class EZPlayer: NSObject {
     open  private(set)  var controlsHidden = false
 
     /// 过多久自动消失控件，设置为<=0不消失
-    open var autohiddenTimeInterval: TimeInterval = 8
+    @objc open var autohiddenTimeInterval: TimeInterval = 8
 
 
     /// 返回按钮block
-    open var backButtonBlock:(( _ fromDisplayMode: EZPlayerDisplayMode) -> Void)?
+    @objc open var backButtonBlock:(( _ fromDisplayMode: EZPlayerDisplayMode) -> Void)?
 
 
-    open var floatContainer: EZPlayerWindowContainer?
-    open var floatContainerRootViewController: EZPlayerWindowContainerRootViewController?
-    open var floatInitFrame = CGRect(x: UIScreen.main.bounds.size.width - 213 - 10, y: UIScreen.main.bounds.size.height - 120 - 49 - 34 - 10, width: 213, height: 120)
+    @objc open var floatContainer: EZPlayerWindowContainer?
+    @objc open var floatContainerRootViewController: EZPlayerWindowContainerRootViewController?
+    @objc open var floatInitFrame = CGRect(x: UIScreen.main.bounds.size.width - 213 - 10, y: UIScreen.main.bounds.size.height - 120 - 49 - 34 - 10, width: 213, height: 120)
     //    autohideTimeInterval//
     // MARK: -  player status
 
-    open fileprivate(set) var state = EZPlayerState.unknown{
+    @objc open fileprivate(set) var state = EZPlayerState.unknown{
         didSet{
             printLog("old state: \(oldValue)")
             printLog("new state: \(state)")
@@ -316,7 +316,7 @@ open class EZPlayer: NSObject {
     }
     open private(set)  var lastDisplayMode = EZPlayerDisplayMode.none
 
-    open var isPlaying:Bool{
+    @objc open var isPlaying:Bool{
         guard let player = self.player else {
             return false
         }
@@ -328,7 +328,7 @@ open class EZPlayer: NSObject {
     }
 
     /// 视频长度，live是NaN
-    open var duration: TimeInterval? {
+    @objc open var duration: TimeInterval? {
         if let  duration = self.player?.duration  {
             return duration
         }
@@ -337,7 +337,7 @@ open class EZPlayer: NSObject {
 
 
     /// 视频进度
-    open var currentTime: TimeInterval? {
+    @objc open var currentTime: TimeInterval? {
         if let  currentTime = self.player?.currentTime {
             return currentTime
         }
@@ -345,7 +345,7 @@ open class EZPlayer: NSObject {
     }
 
     /// 视频播放速率
-    open var rate: Float{
+    @objc open var rate: Float{
         get {
             if let player = self.player {
                 return player.rate
@@ -361,7 +361,7 @@ open class EZPlayer: NSObject {
 
 
     /// 系统音量
-    open var systemVolume: Float{
+    @objc open var systemVolume: Float{
         get {
             return systemVolumeSlider.value
         }
@@ -413,18 +413,14 @@ open class EZPlayer: NSObject {
 
     }
 
-    public init(controlView: UIView? ) {
+    public init(controlView: UIView) {
         super.init()
-        if controlView == nil{
-            self.controlViewForEmbedded = UIView()
-        }else{
-            self.controlViewForEmbedded = controlView
-        }
+        self.controlViewForEmbedded = controlView
         self.commonInit()
     }
 
     // MARK: - Player action
-    open func playWithURL(_ url: URL,embeddedContentView contentView: UIView? = nil, title: String? = nil) {
+    @objc open func playWithURL(_ url: URL,embeddedContentView contentView: UIView? = nil, title: String? = nil) {
 
         self.contentItem = EZPlayerContentItem(url: url, title: title)
         self.contentURL = url
@@ -462,19 +458,19 @@ open class EZPlayer: NSObject {
         self.setControlsHidden(false, animated: true)
     }
 
-    open func play(){
+    @objc open func play(){
         self.state = .playing
         self.player?.play()
 
     }
 
 
-    open func pause(){
+    @objc open func pause(){
         self.state = .pause
         self.player?.pause()
     }
 
-    open func stop(){
+    @objc open func stop(){
         let lastState = self.state
         self.state = .stopped
         self.player?.pause()
@@ -489,7 +485,7 @@ open class EZPlayer: NSObject {
         }
     }
 
-    open func seek(to time: TimeInterval, completionHandler: ((Bool) -> Swift.Void )? = nil){
+    @objc open func seek(to time: TimeInterval, completionHandler: ((Bool) -> Swift.Void )? = nil){
         guard let player = self.player else {
             return
         }
@@ -520,7 +516,7 @@ open class EZPlayer: NSObject {
 
 
     private var isChangingDisplayMode = false
-    open func toFull(_ orientation:UIDeviceOrientation = .landscapeLeft, animated: Bool = true ,completion: ((Bool) -> Swift.Void)? = nil) {
+    @objc open func toFull(_ orientation:UIDeviceOrientation = .landscapeLeft, animated: Bool = true ,completion: ((Bool) -> Swift.Void)? = nil) {
         if self.isChangingDisplayMode == true {
             completion?(false)
             return
@@ -647,7 +643,7 @@ open class EZPlayer: NSObject {
 
     }
 
-    open func toEmbedded(animated: Bool = true , completion: ((Bool) -> Swift.Void)? = nil){
+    @objc open func toEmbedded(animated: Bool = true , completion: ((Bool) -> Swift.Void)? = nil){
         if self.isChangingDisplayMode == true {
             completion?(false)
             return
@@ -781,7 +777,7 @@ open class EZPlayer: NSObject {
     /// - Parameters:
     ///   - animated: <#animated description#>
     ///   - completion: <#completion description#>
-    open func toFloat(animated: Bool = true, completion: ((Bool) -> Swift.Void)? = nil) {
+    @objc open func toFloat(animated: Bool = true, completion: ((Bool) -> Swift.Void)? = nil) {
         if self.floatMode == .none {
             completion?(false)
             return
@@ -831,14 +827,14 @@ open class EZPlayer: NSObject {
 
     // MARK: - public
 
-    open func setControlsHidden(_ hidden: Bool, animated: Bool = false){
+    @objc open func setControlsHidden(_ hidden: Bool, animated: Bool = false){
         self.controlsHidden = hidden
         (self.controlView as? EZPlayerDelegate)?.player(self, playerControlsHiddenDidChange: hidden ,animated: animated )
         self.delegate?.player(self, playerControlsHiddenDidChange: hidden,animated: animated)
         NotificationCenter.default.post(name: .EZPlayerControlsHiddenDidChange, object: self, userInfo: [Notification.Key.EZPlayerControlsHiddenDidChangeKey: hidden,Notification.Key.EZPlayerControlsHiddenDidChangeByAnimatedKey: animated])
     }
 
-    open  func updateCustomView(toDisplayMode: EZPlayerDisplayMode? = nil){
+    @objc open  func updateCustomView(toDisplayMode: EZPlayerDisplayMode? = nil){
         var nextDisplayMode = self.displayMode
         if toDisplayMode != nil{
             nextDisplayMode = toDisplayMode!
@@ -1179,7 +1175,7 @@ extension EZPlayer {
 
 
     //支持m3u8
-    open func snapshotImage() -> UIImage? {
+    @objc open func snapshotImage() -> UIImage? {
         guard let playerItem = self.playerItem else {  //playerItem is AVPlayerItem
             return nil
         }
