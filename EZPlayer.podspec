@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "EZPlayer"
-  s.version      = "1.1.1"
+  s.version      = "1.1.2"
   s.summary      = "Player base on AVPlayer"
 
   s.swift_versions = ['5.0']

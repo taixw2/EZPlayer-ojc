@@ -86,7 +86,7 @@ open class EZPlayer: NSObject {
     // MARK: -  player utils
     @objc public static var showLog = true//是否显示log
     // MARK: -  player setting
-    @objc open weak var delegate: EZPlayerDelegate?
+    open weak var delegate: EZPlayerDelegate?
 
     open var videoGravity = EZPlayerVideoGravity.aspect{
         didSet {
@@ -103,9 +103,9 @@ open class EZPlayer: NSObject {
     /// 设备横屏时自动旋转(phone)
     @objc open var autoLandscapeFullScreenLandscape = UIDevice.current.userInterfaceIdiom == .phone
     /// 浮框的模式
-    @objc open var floatMode = EZPlayerFloatMode.auto
+    open var floatMode = EZPlayerFloatMode.auto
     /// 全屏的模式
-    @objc open var fullScreenMode = EZPlayerFullScreenMode.landscape
+    open var fullScreenMode = EZPlayerFullScreenMode.landscape
     /// 全屏时status bar的样式
     @objc open var fullScreenPreferredStatusBarStyle = UIStatusBarStyle.lightContent
     /// 全屏时status bar的背景色
@@ -134,7 +134,7 @@ open class EZPlayer: NSObject {
     private var timer       : Timer?//.EZPlayerHeartbeat使用
 
     // MARK: -  player resource
-    @objc open var contentItem: EZPlayerContentItem?
+    open var contentItem: EZPlayerContentItem?
 
     open private(set)  var contentURL :URL?{//readonly
         didSet{
@@ -201,7 +201,7 @@ open class EZPlayer: NSObject {
     }
 
     /// 上下滑动屏幕的控制类型
-    @objc open var slideTrigger = (left:EZPlayerSlideTrigger.volume,right:EZPlayerSlideTrigger.brightness)
+    open var slideTrigger = (left:EZPlayerSlideTrigger.volume,right:EZPlayerSlideTrigger.brightness)
     /// 左右滑动屏幕改变视频进度
     @objc open var canSlideProgress = true
 
@@ -264,16 +264,16 @@ open class EZPlayer: NSObject {
 
 
     /// 返回按钮block
-    @objc open var backButtonBlock:(( _ fromDisplayMode: EZPlayerDisplayMode) -> Void)?
+    open var backButtonBlock:(( _ fromDisplayMode: EZPlayerDisplayMode) -> Void)?
 
 
-    @objc open var floatContainer: EZPlayerWindowContainer?
+    open var floatContainer: EZPlayerWindowContainer?
     @objc open var floatContainerRootViewController: EZPlayerWindowContainerRootViewController?
     @objc open var floatInitFrame = CGRect(x: UIScreen.main.bounds.size.width - 213 - 10, y: UIScreen.main.bounds.size.height - 120 - 49 - 34 - 10, width: 213, height: 120)
     //    autohideTimeInterval//
     // MARK: -  player status
 
-    @objc open fileprivate(set) var state = EZPlayerState.unknown{
+    @open fileprivate(set) var state = EZPlayerState.unknown{
         didSet{
             printLog("old state: \(oldValue)")
             printLog("new state: \(state)")
@@ -328,7 +328,7 @@ open class EZPlayer: NSObject {
     }
 
     /// 视频长度，live是NaN
-    @objc open var duration: TimeInterval? {
+    open var duration: TimeInterval? {
         if let  duration = self.player?.duration  {
             return duration
         }
@@ -337,7 +337,7 @@ open class EZPlayer: NSObject {
 
 
     /// 视频进度
-    @objc open var currentTime: TimeInterval? {
+    open var currentTime: TimeInterval? {
         if let  currentTime = self.player?.currentTime {
             return currentTime
         }
@@ -834,7 +834,7 @@ open class EZPlayer: NSObject {
         NotificationCenter.default.post(name: .EZPlayerControlsHiddenDidChange, object: self, userInfo: [Notification.Key.EZPlayerControlsHiddenDidChangeKey: hidden,Notification.Key.EZPlayerControlsHiddenDidChangeByAnimatedKey: animated])
     }
 
-    @objc open  func updateCustomView(toDisplayMode: EZPlayerDisplayMode? = nil){
+    open  func updateCustomView(toDisplayMode: EZPlayerDisplayMode? = nil){
         var nextDisplayMode = self.displayMode
         if toDisplayMode != nil{
             nextDisplayMode = toDisplayMode!
