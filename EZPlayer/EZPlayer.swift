@@ -273,7 +273,7 @@ open class EZPlayer: NSObject {
     //    autohideTimeInterval//
     // MARK: -  player status
 
-    @open fileprivate(set) var state = EZPlayerState.unknown{
+    open fileprivate(set) var state = EZPlayerState.unknown{
         didSet{
             printLog("old state: \(oldValue)")
             printLog("new state: \(state)")
