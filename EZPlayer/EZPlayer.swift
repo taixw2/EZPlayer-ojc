@@ -406,14 +406,14 @@ open class EZPlayer: NSObject {
     }
 
 
-    public override init() {
+    @objc public override init() {
         super.init()
         self.commonInit()
 
 
     }
 
-    public init(controlView: UIView) {
+    @objc public init(controlView: UIView) {
         super.init()
         self.controlViewForEmbedded = controlView
         self.commonInit()
